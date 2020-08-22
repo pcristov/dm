@@ -1,11 +1,11 @@
-#display {
-  max-width: 100vh;
+#grid-wrapper {
+  max-width: 50vh;
   margin: 0 auto;
 }
 
 .grid {
   display: grid;
-  height: 50vh;
+  height: 45vh;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
@@ -17,5 +17,5 @@
 }
 
 .drum-pad {
-	padding-top: 20%;
+	padding-top: 30px;
 }
