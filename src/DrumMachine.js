@@ -1,6 +1,54 @@
 import React, {Component} from 'react';
 import './DrumMachine.css';
 
+const sounds = [
+	{
+		id: 'Heater-1',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
+		keyTrigger: 'Q'
+	},
+	{
+		id: 'Heater-2',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3',
+		keyTrigger: 'W'
+	},
+	{
+		id: 'Heater-3',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3',
+		keyTrigger: 'E'
+	},
+	{
+		id: 'Heater-4',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3',
+		keyTrigger: 'A'
+	},
+	{
+		id: 'Clap',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3',
+		keyTrigger: 'S'
+	},
+	{
+		id: 'Open-HH',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3',
+		keyTrigger: 'D'
+	},
+	{
+		id: 'Kick-n\'-Hat',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3',
+		keyTrigger: 'Z'
+	},
+	{
+		id: 'Kick',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3',
+		keyTrigger: 'X'
+	},
+	{
+		id: 'Closed-HH',
+		url: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3',
+		keyTrigger: 'C'
+	},
+];
+
 export default class Editor extends Component {
 
 constructor(props) {
@@ -12,13 +60,9 @@ constructor(props) {
     }
     
     this.playSound = this.playSound.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
 }
 
 playSound(event) {
-	this.setState({
-    });
-    
     const audio = event.target.firstElementChild;
     audio.play();
 }
@@ -40,6 +84,13 @@ componentWillUnmount() {
 }
 
 render() {
+	const soundsArray = sounds.map(sound => (
+					<div id={ sound.id } key={ sound.id } className="drum-pad" onClick={ this.playSound }>
+						{ sound.keyTrigger }
+						<audio src={ sound.url } id={ sound.keyTrigger } />
+					</div>
+					));
+
 	return (
 		<div id="drum-machine">
 			<div id="display">
@@ -48,46 +99,7 @@ render() {
 			
 			<div id="grid-wrapper">
 				<div className="grid">
-					<div id="Heater-1" className="drum-pad" onClick={ this.playSound }>
-						Q
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" id="Q" />
-					</div>
-					<div id="Heater-2" className="drum-pad" onClick={ this.playSound }>
-						W
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3" id="W" />
-					</div>
-					<div id="Heater-3" className="drum-pad" onClick={ this.playSound }>
-						E
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3" id="E" />
-					</div>
-					
-					
-					<div id="Heater-4" className="drum-pad" onClick={ this.playSound }>
-						A
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3" id="A" />
-					</div>
-					<div id="Clap" className="drum-pad" onClick={ this.playSound }>
-						S
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3" id="S" />
-					</div>
-					<div id="Open-HH" className="drum-pad" onClick={ this.playSound }>
-						D
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3" id="D" />
-					</div>
-					
-					
-					<div id="Kick-n'-Hat" className="drum-pad" onClick={ this.playSound }>
-						Z
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3" id="Z" />
-					</div>
-					<div id="Kick" className="drum-pad" onClick={ this.playSound }>
-						X
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3" id="X" />
-					</div>
-					<div id="Closed-HH" className="drum-pad" onClick={ this.playSound }>
-						C
-						<audio src="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3" id="C" />
-					</div>
+					{ soundsArray }
 				</div>
 			</div>
 		</div>
