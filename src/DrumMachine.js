@@ -55,15 +55,20 @@ constructor(props) {
     super(props)
     
     this.state = {
-		editorContent: '',
-		previewContent: ''
+		description: ''
     }
     
     this.playSound = this.playSound.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
 }
 
 playSound(event) {
     const audio = event.target.firstElementChild;
+  
+	this.setState({
+      description: event.target.id
+    });
+    
     audio.play();
 }
 
@@ -71,6 +76,10 @@ handleKeyPress(event) {
     const audio = document.getElementById(event.key.toUpperCase());
 	
 	if(audio) {
+		this.setState({
+			description: audio.parentNode.id
+	    });
+    
     	audio.play();
     }
 }
@@ -87,14 +96,14 @@ render() {
 	const soundsArray = sounds.map(sound => (
 					<div id={ sound.id } key={ sound.id } className="drum-pad" onClick={ this.playSound }>
 						{ sound.keyTrigger }
-						<audio src={ sound.url } id={ sound.keyTrigger } />
+						<audio src={ sound.url } class="clip" id={ sound.keyTrigger } />
 					</div>
 					));
 
 	return (
 		<div id="drum-machine">
 			<div id="display">
-			Display
+			{ this.state.description }
 			</div>
 			
 			<div id="grid-wrapper">
