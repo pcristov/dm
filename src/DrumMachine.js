@@ -99,7 +99,7 @@ export default class DrumMachine extends Component {
 		const soundsArray = sounds.map(sound => (
 						<div id={ sound.id } key={ sound.id } className={`drum-pad ${this.state.activePad == sound.keyTrigger ? "active" : ""}`} onClick={ this.playSound }>
 							{ sound.keyTrigger }
-							<audio src={ sound.url } class="clip" id={ sound.keyTrigger } />
+							<audio src={ sound.url } className="clip" id={ sound.keyTrigger } />
 						</div>
 						));
 	
