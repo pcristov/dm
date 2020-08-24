@@ -49,68 +49,71 @@ const sounds = [
 	},
 ];
 
-export default class Editor extends Component {
+export default class DrumMachine extends Component {
 
-constructor(props) {
-    super(props)
-    
-    this.state = {
-		description: ''
-    }
-    
-    this.playSound = this.playSound.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-}
-
-playSound(event) {
-    const audio = event.target.firstElementChild;
-  
-	this.setState({
-      description: event.target.id
-    });
-    
-    audio.play();
-}
-
-handleKeyPress(event) {
-    const audio = document.getElementById(event.key.toUpperCase());
+	constructor(props) {
+	    super(props)
+	    
+	    this.state = {
+			description: '',
+			activePad: '',
+	    }
+	    
+	    this.playSound = this.playSound.bind(this);
+	    this.handleKeyPress = this.handleKeyPress.bind(this);
+	}
 	
-	if(audio) {
+	playSound(event) {
+	    const audio = event.target.firstElementChild;
+	  
 		this.setState({
-			description: audio.parentNode.id
+	      description: event.target.id.replace('-', ' '),
+	      activePad: audio.id
 	    });
-    
-    	audio.play();
-    }
-}
-
-componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyPress);
-}
-
-componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyPress);
-}
-
-render() {
-	const soundsArray = sounds.map(sound => (
-					<div id={ sound.id } key={ sound.id } className="drum-pad" onClick={ this.playSound }>
-						{ sound.keyTrigger }
-						<audio src={ sound.url } class="clip" id={ sound.keyTrigger } />
+	    
+	    audio.play();
+	}
+	
+	handleKeyPress(event) {
+	    const audio = document.getElementById(event.key.toUpperCase());
+		
+		if(audio) {
+			this.setState({
+				description: audio.parentNode.id.replace('-', ' '),
+				activePad: audio.id
+		    });
+	    
+	    	audio.play();
+	    }
+	}
+	
+	componentDidMount() {
+	    document.addEventListener('keydown', this.handleKeyPress);
+	}
+	
+	componentWillUnmount() {
+	    document.removeEventListener('keydown', this.handleKeyPress);
+	}
+	
+	render() {
+		const soundsArray = sounds.map(sound => (
+						<div id={ sound.id } key={ sound.id } className={`drum-pad ${this.state.activePad == sound.keyTrigger ? "active" : ""}`} onClick={ this.playSound }>
+							{ sound.keyTrigger }
+							<audio src={ sound.url } class="clip" id={ sound.keyTrigger } />
+						</div>
+						));
+	
+		return (
+			<div id="drum-machine">
+				<div id="display">
+				{ this.state.description }
+				</div>
+				
+				<div id="grid-wrapper">
+					<div className="grid">
+						{ soundsArray }
 					</div>
-					));
-
-	return (
-		<div id="drum-machine">
-			<div id="display">
-			{ this.state.description }
-			</div>
-			
-			<div id="grid-wrapper">
-				<div className="grid">
-					{ soundsArray }
 				</div>
 			</div>
-		</div>
 	)}
 }
