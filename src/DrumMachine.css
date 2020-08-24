@@ -1,3 +1,12 @@
+#drum-machine {
+	margin-top: 50px;
+}
+
+#display {
+	margin: 20px;
+	font-size: 30px;
+}
+
 #grid-wrapper {
   max-width: 50vh;
   margin: 0 auto;
@@ -18,4 +27,9 @@
 
 .drum-pad {
 	padding-top: 30px;
+	border-radius: 5px;
+}
+
+.active {
+	background-color: #2effcf;
 }
